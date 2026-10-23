@@ -302,6 +302,10 @@ const projects = [
     desc: "",
     vimeo: "773279006",
     g: "radial-gradient(120% 90% at 70% 30%, #f6c27a 0%, #d9785a 22%, #2f4f6b 55%, #0f1d2b 100%)" },
+  { title: "", client: "Cliente a definir", kind: "Motion design", year: "",
+    role: "Motion design", fmt: "", desc: "",
+    youtube: "ux3-NAYnI5Y",
+    g: "linear-gradient(140deg, #23324a 0%, #4b5d86 45%, #c8b8e6 100%)" },
   { title: "Noites de Alfama", client: "Sardinha Azul", kind: "Videoclipe", year: 2025,
     role: "Realização, cor", fmt: "HD · 16:9", desc: "Exemplo.",
     g: "radial-gradient(70% 60% at 30% 40%, #ff9f5a 0%, #8a2f4a 35%, #24102a 70%, #0b0710 100%)" },
@@ -362,20 +366,25 @@ function play(card, on) {
   }
   // sem clip MP4: usa o próprio vídeo do Vimeo, sem som e sem controlos
   const p = visible[+card.dataset.i];
-  if (!p || !p.vimeo) return;
+  if (!p || !(p.vimeo || p.youtube)) return;
   let f = card.querySelector("iframe.bg");
   if (on && !f) {
-    const [id, q] = p.vimeo.split("?");
     f = document.createElement("iframe");
     f.className = "bg"; f.tabIndex = -1; f.setAttribute("aria-hidden", "true");
     f.allow = "autoplay; fullscreen";
-    f.src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1`;
+    if (p.vimeo) {
+      const [id, q] = p.vimeo.split("?");
+      f.src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1`;
+    } else {
+      f.src = `https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.youtube}&playsinline=1&modestbranding=1&rel=0&enablejsapi=1`;
+    }
     f.addEventListener("load", () => card.classList.toggle("playing", card.matches(":hover") || !canHover));
     card.querySelector(".shade").before(f);
     return;
   }
   if (!f) return;
-  f.contentWindow.postMessage(JSON.stringify({ method: on ? "play" : "pause" }), "*");
+  f.contentWindow.postMessage(JSON.stringify(p.vimeo ? { method: on ? "play" : "pause" }
+    : { event: "command", func: on ? "playVideo" : "pauseVideo", args: [] }), "*");
   card.classList.toggle("playing", on);
 }
 function hookPreviews() {
@@ -403,8 +412,13 @@ Promise.all(projects.map(async p => {
       const d = await r.json();
       if (!p.thumb && d.thumbnail_url) p.thumb = d.thumbnail_url;
       if (!p.title && d.title) p.title = d.title;
-    } else if (p.youtube && !p.thumb) {
-      p.thumb = `https://i.ytimg.com/vi/${p.youtube}/hqdefault.jpg`;
+    } else if (p.youtube) {
+      if (!p.thumb) p.thumb = `https://i.ytimg.com/vi/${p.youtube}/hqdefault.jpg`;
+      if (!p.title) {
+        const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent("https://www.youtube.com/watch?v=" + p.youtube)}`);
+        const d = r.ok ? await r.json() : {};
+        if (d.title) p.title = d.title;
+      }
     }
   } catch (e) {}
 })).then(render);
