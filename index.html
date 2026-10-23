@@ -296,10 +296,10 @@ footer .name { color: var(--fg); font-weight: 600; }
    preview: clip curto MP4 sem som para o hover (ex.: "media/mare-alta.mp4")
    g:       gradiente usado enquanto não há imagem de capa */
 const projects = [
-  { title: "", client: "Cliente a definir", kind: "Publicidade", year: 2026,
-    role: "Realização, montagem", fmt: "",
-    desc: "Primeiro vídeo real, carregado do Vimeo. Título, cliente e texto ainda por preencher.",
-    vimeo: "773279006?h=5e2d943cfe",
+  { title: "Talkdesk Identity", client: "Talkdesk", kind: "Branding", year: "",
+    role: "Motion design", fmt: "",
+    desc: "",
+    vimeo: "773279006",
     g: "radial-gradient(120% 90% at 70% 30%, #f6c27a 0%, #d9785a 22%, #2f4f6b 55%, #0f1d2b 100%)" },
   { title: "Noites de Alfama", client: "Sardinha Azul", kind: "Videoclipe", year: 2025,
     role: "Realização, cor", fmt: "HD · 16:9", desc: "Exemplo.",
@@ -398,7 +398,7 @@ const pad = n => String(n).padStart(2, "0");
 function embed(p) {
   if (p.vimeo) {
     const [id, q] = p.vimeo.split("?");
-    const src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
+    const src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&dnt=1`;
     return `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="${p.title}"></iframe>`;
   }
   if (p.youtube) {
