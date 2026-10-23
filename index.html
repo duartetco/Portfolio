@@ -70,11 +70,9 @@ body {
 /* cabeçalho */
 header .wrap { padding-block: 20px 4px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .brand { font: 800 22px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
-.mascot { width: 44px; height: 44px; flex: none; overflow: visible; }
-.mascot .arm { transform-origin: 38px 46px; transform-box: view-box; animation: wave 2.4s ease-in-out 1s 2; }
-.brand:hover .mascot .arm { animation: wave 1.2s ease-in-out infinite; }
-@keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 15%, 45% { transform: rotate(12deg); } 30% { transform: rotate(-8deg); } }
+.brand { display: inline-flex; }
+.avatar { height: 72px; width: auto; display: block; transition: transform .3s; }
+.brand:hover .avatar { transform: rotate(-6deg); }
 .brand i { font-style: normal; color: var(--tally); }
 nav { display: flex; gap: 22px; font-size: 14px; }
 nav a { color: var(--muted); text-decoration: none; }
@@ -223,28 +221,8 @@ footer .mail { font: 500 13px var(--mono); color: var(--fg); user-select: all; }
 <body>
 <header>
   <div class="wrap">
-    <a class="brand" href="#">
-      <svg class="mascot" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="26" cy="20" r="9.5"/>
-        <circle cx="22.8" cy="19" r="1" fill="currentColor" stroke="none"/>
-        <circle cx="29.2" cy="19" r="1" fill="currentColor" stroke="none"/>
-        <path d="M22.5 23.5 Q26 26.5 29.5 23.5"/>
-        <path d="M8 62 C8 47 16 39 26 39 C30 39 33 40 35.5 42"/>
-        <path d="M44 62 C44 56 43 52 41 49"/>
-        <g class="arm">
-          <path d="M35.5 42 L44 27"/>
-          <path d="M41 49 L50 30"/>
-          <path d="M44 27 C42.8 24.5 42.8 22 44.2 20 L52.6 22.6 C53.4 25.5 52.4 28 50 30"/>
-          <path d="M44.2 20 L43.6 13.8"/>
-          <path d="M47 20.6 L47.4 12.2"/>
-          <path d="M49.8 21.6 L51.2 13.4"/>
-          <path d="M52.6 22.6 L55.2 16.8"/>
-          <path d="M43.4 24.6 L39.6 21.6"/>
-        </g>
-        <path class="wave" d="M56.5 9.5 Q59.5 12 59.5 15.5"/>
-        <path class="wave" d="M59.5 5.5 Q63 9 63 14"/>
-      </svg>
-      <span>Duarte<i>.</i></span>
+    <a class="brand" href="#" aria-label="Duarte, início">
+      <img class="avatar" src="avatar.png" alt="Duarte" width="64" height="80">
     </a>
     <nav aria-label="Principal">
       <a href="#trabalhos" aria-current="page">Trabalhos</a>
