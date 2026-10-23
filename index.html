@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfólio de Vídeo Duarte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho tipo "créditos de abertura", filtros por tipo, grelha 16:9 de thumbnails com cliente por baixo, lightbox de cinema ao clicar */
+:root {
+  --bg: #121419;
+  --surface: #1b1e25;
+  --line: #2b2f39;
+  --fg: #ecebe6;
+  --muted: #9a9ca6;
+  --accent: #e7b04b;           /* luz de tungsténio */
+  --tally: #e0574a;            /* luz REC da câmara */
+  --scrim: rgba(8, 9, 12, .92);
+  --display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f1f0ec; --surface: #e6e5df; --line: #d3d1c9; --fg: #17181c; --muted: #61636b;
+    --accent: #a8700f; --tally: #c4382b; --scrim: rgba(14, 15, 18, .9); color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f1f0ec; --surface: #e6e5df; --line: #d3d1c9; --fg: #17181c; --muted: #61636b;
+  --accent: #a8700f; --tally: #c4382b; --scrim: rgba(14, 15, 18, .9); color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 15px/1.55 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1320px; margin: 0 auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 520px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+/* aviso de maquete */
+.mock-note {
+  border-bottom: 1px solid var(--line);
+  font: 500 12px/1.4 var(--mono); color: var(--muted);
+}
+.mock-note .wrap { padding-block: 10px; display: flex; gap: 8px 20px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.mock-note b { color: var(--accent); font-weight: 500; }
+.variants { display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.seg button {
+  font: 500 11px/1 var(--mono); color: var(--muted); background: none; border: 0;
+  padding: 6px 10px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* cabeçalho */
+header .wrap { padding-block: 28px 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.brand { font: 800 22px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; }
+.brand i { font-style: normal; color: var(--tally); }
+nav { display: flex; gap: 22px; font-size: 14px; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover, nav a[aria-current] { color: var(--fg); }
+
+.intro .wrap { padding-block: 40px 36px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; }
+.intro h1 {
+  margin: 0; font: 800 clamp(48px, 9vw, 128px)/.86 var(--display);
+  text-transform: uppercase; letter-spacing: -.005em; text-wrap: balance;
+}
+.intro h1 span { color: var(--accent); }
+.intro p { margin: 0; max-width: 34ch; color: var(--muted); }
+.rec { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); color: var(--fg); margin-bottom: 14px; letter-spacing: .04em; }
+.rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--tally); animation: blink 1.6s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+@media (max-width: 760px) { .intro .wrap { grid-template-columns: 1fr; } }
+
+/* filtros */
+.filters .wrap { display: flex; gap: 8px; flex-wrap: wrap; padding-block: 24px 22px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+.chip {
+  font: 500 13px/1 var(--body); color: var(--muted); background: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 16px; height: 34px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center;
+}
+.chip:hover { color: var(--fg); border-color: var(--muted); }
+.chip[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.chip sup { font: 400 10px var(--mono); margin-left: 3px; opacity: .7; }
+
+/* grelha */
+.grid { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 24px; padding-bottom: 72px; }
+@media (max-width: 980px) { .grid { --cols: 2 !important; } }
+@media (max-width: 600px) { .grid { --cols: 1 !important; } }
+.card { display: flex; flex-direction: column; gap: 14px; cursor: pointer; background: none; border: 0; padding: 0; text-align: left; color: inherit; font: inherit; }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
+
+.thumb {
+  position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; border-radius: 3px;
+  background: var(--g); isolation: isolate;
+}
+.thumb::before { /* grão de película */
+  content: ""; position: absolute; inset: 0; z-index: 1; opacity: .28; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.thumb .scene { position: absolute; inset: -6%; background: var(--g); transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+/* hover: simula a pré-visualização em loop (no site real, um MP4 curto sem som) */
+.card:hover .scene, .card:focus-visible .scene { animation: drift 5s ease-in-out infinite alternate; }
+.thumb .shade { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%); opacity: 0; transition: opacity .3s; }
+.thumb .play {
+  position: absolute; z-index: 3; left: 50%; top: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px;
+  border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center;
+  transform: scale(.8); opacity: 0; transition: transform .3s, opacity .3s;
+}
+.thumb .play::after { content: ""; border-left: 16px solid #111; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+.card:hover .shade, .card:focus-visible .shade { opacity: 1; }
+.card:hover .play, .card:focus-visible .play { opacity: 1; transform: scale(1); }
+.thumb .dur, .thumb .kind {
+  position: absolute; z-index: 3; font: 500 11px/1 var(--mono); color: #fff;
+  background: rgba(0,0,0,.55); padding: 5px 7px; border-radius: 2px; letter-spacing: .03em;
+}
+.thumb .dur { right: 10px; bottom: 10px; }
+.thumb .kind { left: 10px; top: 10px; text-transform: uppercase; }
+.thumb .ov { /* título sobre a imagem (variante) */
+  position: absolute; z-index: 3; left: 14px; right: 14px; bottom: 12px; color: #fff; display: none;
+}
+.ov .client { color: rgba(255,255,255,.75); }
+.ov .title { color: #fff; }
+
+.meta { display: grid; gap: 3px; }
+.client { font: 500 11px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+.title { font: 700 28px/1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
+.sub { color: var(--muted); font-size: 13px; }
+
+/* variante: texto sobre a imagem */
+.labels-over .meta { display: none; }
+.labels-over .thumb .ov { display: grid; gap: 4px; }
+.labels-over .thumb .shade { opacity: .9; }
+.labels-over .thumb .dur { top: 10px; bottom: auto; }
+
+/* destaque: primeiro projeto ocupa duas colunas */
+.grid.feature .card:first-child { grid-column: span 2; }
+.grid.feature .card:first-child .title { font-size: 40px; }
+@media (max-width: 600px) { .grid.feature .card:first-child { grid-column: auto; } }
+@media (min-width: 981px) {
+  .grid.feature:not([style*="--cols: 2"]) .card:first-child { grid-row: span 2; }
+  .grid.feature:not([style*="--cols: 2"]) .card:first-child .thumb { aspect-ratio: auto; flex: 1; min-height: 100%; }
+}
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 28px 40px; display: flex; gap: 12px 28px; flex-wrap: wrap; justify-content: space-between; color: var(--muted); font-size: 13px; }
+footer .mail { font: 500 13px var(--mono); color: var(--fg); user-select: all; }
+
+/* lightbox */
+.lb {
+  position: fixed; inset: 0; z-index: 50; background: var(--scrim); color: #ecebe6;
+  display: grid; place-items: center; backdrop-filter: blur(6px);
+  padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  animation: fade .25s ease;
+}
+@keyframes fade { from { opacity: 0; } }
+.lb-inner { width: min(1100px, 100%); display: grid; gap: 18px; max-height: 100%; overflow: auto; }
+.player { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: #000; border-radius: 3px; overflow: hidden; }
+.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.thumb video, .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.thumb video { opacity: 0; transition: opacity .3s; }
+.card.playing .thumb video { opacity: 1; }
+.player .scene { position: absolute; inset: -10%; background: var(--g); animation: drift 14s ease-in-out infinite alternate; }
+.player.paused .scene { animation-play-state: paused; }
+@keyframes drift { to { transform: translate(4%, -3%) scale(1.12); } }
+.player::before { content: ""; position: absolute; inset: 0; z-index: 1; opacity: .3; mix-blend-mode: overlay; background-image: inherit; }
+.player .hint {
+  position: absolute; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font: 500 12px/1.5 var(--mono); text-align: center; color: rgba(255,255,255,.85);
+  background: rgba(0,0,0,.45); padding: 10px 14px; border-radius: 3px; width: max-content; max-width: 86%;
+}
+.controls {
+  position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 14px;
+  padding: 26px 16px 12px; background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+  font: 500 12px/1 var(--mono); color: #fff;
+}
+.controls button { background: none; border: 0; color: #fff; cursor: pointer; padding: 4px; font: inherit; display: grid; place-items: center; }
+.bar { flex: 1; height: 3px; background: rgba(255,255,255,.25); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: #e7b04b; }
+.tc { font-variant-numeric: tabular-nums; }
+.lb-info { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 40px; align-items: start; }
+.lb-info .client { color: #e7b04b; }
+.lb-info h2 { margin: 6px 0 8px; font: 800 clamp(34px, 5vw, 56px)/.9 var(--display); text-transform: uppercase; }
+.lb-info p { margin: 0; max-width: 60ch; color: #b9bac2; }
+.credits { display: grid; grid-template-columns: auto auto; gap: 6px 18px; font-size: 13px; margin: 0; }
+.credits dt { font: 500 11px/1.8 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: #8b8d97; }
+.credits dd { margin: 0; color: #ecebe6; }
+.lb-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 14px; }
+.lb-nav button, .lb-close {
+  background: none; border: 1px solid rgba(255,255,255,.25); color: #ecebe6; border-radius: 999px;
+  font: 500 12px/1 var(--mono); padding: 9px 14px; cursor: pointer;
+}
+.lb-nav button:hover, .lb-close:hover { border-color: #fff; }
+.lb-close { position: fixed; z-index: 51; top: max(16px, calc(env(safe-area-inset-top, 0px) + 12px)); right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px)); background: rgba(0,0,0,.4); }
+@media (max-width: 700px) { .lb-info { grid-template-columns: 1fr; } }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">Duarte<i>.</i></div>
+    <nav aria-label="Principal">
+      <a href="#trabalhos" aria-current="page">Trabalhos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="filters" id="trabalhos">
+  <div class="wrap" id="filters" role="group" aria-label="Filtrar por tipo"></div>
+</section>
+
+<main class="wrap">
+  <div class="grid feature labels-over" id="grid"></div>
+</main>
+
+<footer id="contacto">
+  <div class="wrap">
+    <span>© 2026 Duarte · Realizador e editor de vídeo</span>
+    <span class="mail">ola@exemplo.pt</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
+  <button class="lb-close" type="button" id="lb-close" aria-label="Fechar">Fechar ✕</button>
+  <div class="lb-inner">
+    <div class="player" id="player">
+      <div id="frame"></div>
+    </div>
+    <div class="lb-info">
+      <div>
+        <div class="client" id="lb-client"></div>
+        <h2 id="lb-title"></h2>
+        <p id="lb-desc"></p>
+      </div>
+      <dl class="credits" id="lb-credits"></dl>
+    </div>
+    <div class="lb-nav">
+      <button type="button" id="prev">← Anterior</button>
+      <span class="tc" id="lb-count" style="font: 500 12px var(--mono); color: #8b8d97"></span>
+      <button type="button" id="next">Seguinte →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Projetos. Para cada um:
+   vimeo:   "ID" ou "ID?h=HASH" (do link de partilha do Vimeo)
+   youtube: "ID" (o código depois de watch?v=)
+   thumb:   imagem de capa (ex.: "media/mare-alta.jpg")
+   preview: clip curto MP4 sem som para o hover (ex.: "media/mare-alta.mp4")
+   g:       gradiente usado enquanto não há imagem de capa */
+const projects = [
+  { title: "Projeto Vimeo", client: "Cliente a definir", kind: "Publicidade", year: 2026,
+    role: "Realização, montagem", fmt: "",
+    desc: "Primeiro vídeo real, carregado do Vimeo. Título, cliente e texto ainda por preencher.",
+    vimeo: "773279006?h=5e2d943cfe",
+    g: "radial-gradient(120% 90% at 70% 30%, #f6c27a 0%, #d9785a 22%, #2f4f6b 55%, #0f1d2b 100%)" },
+  { title: "Noites de Alfama", client: "Sardinha Azul", kind: "Videoclipe", year: 2025,
+    role: "Realização, cor", fmt: "HD · 16:9", desc: "Exemplo.",
+    g: "radial-gradient(70% 60% at 30% 40%, #ff9f5a 0%, #8a2f4a 35%, #24102a 70%, #0b0710 100%)" },
+  { title: "O Último Ofício", client: "Fundação Terra Viva", kind: "Documentário", year: 2025,
+    role: "Realização, imagem, montagem", fmt: "4K · 16:9", desc: "Exemplo.",
+    g: "linear-gradient(160deg, #c9b48a 0%, #7d6a49 40%, #3a3326 75%, #1a1712 100%)" },
+  { title: "Fermento", client: "Padaria Moinho Velho", kind: "Publicidade", year: 2026,
+    role: "Imagem, montagem", fmt: "4K · 16:9", desc: "Exemplo.",
+    g: "radial-gradient(90% 80% at 50% 60%, #ffd9a0 0%, #c8853f 35%, #5a3418 70%, #22140a 100%)" },
+  { title: "Volta 2", client: "Kinetik Bikes", kind: "Produto", year: 2025,
+    role: "Realização", fmt: "4K · 16:9", desc: "Exemplo.",
+    g: "linear-gradient(120deg, #1b2a3a 0%, #2f6f8f 40%, #9fd3d6 70%, #e8f1ee 100%)" },
+  { title: "Cimeira Norte", client: "Porto Tech Hub", kind: "Evento", year: 2025,
+    role: "Imagem, montagem", fmt: "HD · 16:9", desc: "Exemplo.",
+    g: "radial-gradient(80% 70% at 60% 40%, #8f7cff 0%, #3a2f8a 40%, #141238 80%, #08071a 100%)" },
+];
+
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), filtersEl = $("#filters");
+let filter = "Todos", visible = projects.slice();
+
+const kinds = ["Todos", ...new Set(projects.map(p => p.kind))];
+filtersEl.innerHTML = kinds.map(k =>
+  `<button class="chip" type="button" data-k="${k}" aria-pressed="${k === filter}">${k}</button>`).join("");
+filtersEl.addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  filter = b.dataset.k;
+  filtersEl.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+  render();
+});
+
+function render() {
+  visible = filter === "Todos" ? projects.slice() : projects.filter(p => p.kind === filter);
+  grid.innerHTML = visible.map((p, i) => `
+    <button class="card" type="button" data-i="${i}" style="--g:${p.g}" aria-label="Ver ${p.title}, ${p.client}">
+      <div class="thumb">
+        <div class="scene"></div>
+        ${p.thumb ? `<img src="${p.thumb}" alt="" loading="lazy">` : ""}
+        ${p.preview ? `<video src="${p.preview}" muted loop playsinline preload="none"></video>` : ""}
+        <div class="shade"></div>
+        <span class="kind">${p.kind}</span>
+        <span class="play" aria-hidden="true"></span>
+        <div class="ov"><span class="client">${p.client}</span><span class="title">${p.title}</span></div>
+      </div>
+    </button>`).join("");
+  hookPreviews();
+}
+
+// pré-visualização: hover no computador, ao aparecer no ecrã no telemóvel
+const canHover = matchMedia("(hover: hover)").matches;
+let io;
+function play(card, on) {
+  const v = card.querySelector("video"); if (!v) return;
+  card.classList.toggle("playing", on);
+  if (on) v.play().catch(() => {}); else v.pause();
+}
+function hookPreviews() {
+  const cards = grid.querySelectorAll(".card");
+  if (canHover) {
+    cards.forEach(c => {
+      c.addEventListener("mouseenter", () => play(c, true));
+      c.addEventListener("mouseleave", () => play(c, false));
+    });
+  } else {
+    io && io.disconnect();
+    io = new IntersectionObserver(es => es.forEach(e => play(e.target, e.intersectionRatio > .6)), { threshold: [0, .6] });
+    cards.forEach(c => io.observe(c));
+  }
+}
+render();
+grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
+
+// lightbox
+const lb = $("#lb"), frame = $("#frame");
+let cur = 0, lastFocus = null;
+const pad = n => String(n).padStart(2, "0");
+
+function embed(p) {
+  if (p.vimeo) {
+    const [id, q] = p.vimeo.split("?");
+    const src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
+    return `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="${p.title}"></iframe>`;
+  }
+  if (p.youtube) {
+    return `<iframe src="https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${p.title}"></iframe>`;
+  }
+  return `<div class="scene" style="--g:${p.g}"></div><div class="hint">Vídeo ainda por adicionar</div>`;
+}
+
+function open(i) {
+  if (lb.hidden) lastFocus = document.activeElement;
+  cur = (i + visible.length) % visible.length;
+  const p = visible[cur];
+  frame.innerHTML = embed(p);
+  $("#lb-client").textContent = p.client;
+  $("#lb-title").textContent = p.title;
+  $("#lb-desc").textContent = p.desc;
+  $("#lb-credits").innerHTML = [["Cliente", p.client], ["Função", p.role], ["Formato", p.fmt], ["Ano", p.year]]
+    .filter(([, v]) => v).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+  $("#lb-count").textContent = `${pad(cur + 1)} / ${pad(visible.length)}`;
+  lb.hidden = false; document.body.style.overflow = "hidden";
+  $("#lb-close").focus();
+}
+function close() {
+  lb.hidden = true; frame.innerHTML = ""; document.body.style.overflow = "";
+  if (lastFocus) lastFocus.focus();
+}
+$("#lb-close").addEventListener("click", close);
+$("#prev").addEventListener("click", () => open(cur - 1));
+$("#next").addEventListener("click", () => open(cur + 1));
+lb.addEventListener("click", e => { if (e.target === lb) close(); });
+document.addEventListener("keydown", e => {
+  if (lb.hidden) return;
+  if (e.key === "Escape") close();
+  if (e.key === "ArrowRight") open(cur + 1);
+  if (e.key === "ArrowLeft") open(cur - 1);
+});
+</script>
+</body>
+</html>
