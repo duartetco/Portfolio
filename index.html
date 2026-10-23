@@ -296,7 +296,7 @@ footer .name { color: var(--fg); font-weight: 600; }
    preview: clip curto MP4 sem som para o hover (ex.: "media/mare-alta.mp4")
    g:       gradiente usado enquanto não há imagem de capa */
 const projects = [
-  { title: "Projeto Vimeo", client: "Cliente a definir", kind: "Publicidade", year: 2026,
+  { title: "", client: "Cliente a definir", kind: "Publicidade", year: 2026,
     role: "Realização, montagem", fmt: "",
     desc: "Primeiro vídeo real, carregado do Vimeo. Título, cliente e texto ainda por preencher.",
     vimeo: "773279006?h=5e2d943cfe",
@@ -335,7 +335,7 @@ filtersEl.addEventListener("click", e => {
 function render() {
   visible = filter === "Todos" ? projects.slice() : projects.filter(p => p.kind === filter);
   grid.innerHTML = visible.map((p, i) => `
-    <button class="card" type="button" data-i="${i}" style="--g:${p.g}" aria-label="Ver ${p.title}, ${p.client}">
+    <button class="card" type="button" data-i="${i}" style="--g:${p.g}" aria-label="Ver ${p.title || "vídeo"}, ${p.client}">
       <div class="thumb">
         <div class="scene"></div>
         ${p.thumb ? `<img src="${p.thumb}" alt="" loading="lazy">` : ""}
@@ -343,7 +343,7 @@ function render() {
         <div class="shade"></div>
         <span class="kind">${p.kind}</span>
         <span class="play" aria-hidden="true"></span>
-        <div class="ov"><span class="client">${p.client}</span><span class="title">${p.title}</span></div>
+        <div class="ov"><span class="client">${p.client}</span><span class="title">${p.title || ""}</span></div>
       </div>
     </button>`).join("");
   hookPreviews();
@@ -371,6 +371,23 @@ function hookPreviews() {
   }
 }
 render();
+
+// capa e título automáticos a partir do Vimeo / YouTube, quando não estão definidos
+function vimeoUrl(v) { const [id, q] = v.split("?"); const h = new URLSearchParams(q || "").get("h"); return `https://vimeo.com/${id}${h ? "/" + h : ""}`; }
+Promise.all(projects.map(async p => {
+  try {
+    if (p.vimeo && (!p.thumb || !p.title)) {
+      const r = await fetch(`https://vimeo.com/api/oembed.json?width=1280&url=${encodeURIComponent(vimeoUrl(p.vimeo))}`);
+      if (!r.ok) return;
+      const d = await r.json();
+      if (!p.thumb && d.thumbnail_url) p.thumb = d.thumbnail_url;
+      if (!p.title && d.title) p.title = d.title;
+    } else if (p.youtube && !p.thumb) {
+      p.thumb = `https://i.ytimg.com/vi/${p.youtube}/hqdefault.jpg`;
+    }
+  } catch (e) {}
+})).then(render);
+
 grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
 
 // lightbox
