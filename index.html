@@ -256,7 +256,7 @@ footer .name { color: var(--fg); font-weight: 600; }
 </header>
 
 <section class="filters" id="trabalhos">
-  <div class="wrap" id="filters" role="group" aria-label="Filtrar por tipo"></div>
+  <div class="wrap" id="filters" role="group" aria-label="Filtrar por cliente"></div>
 </section>
 
 <main class="wrap">
@@ -387,7 +387,12 @@ const $ = s => document.querySelector(s);
 const grid = $("#grid"), filtersEl = $("#filters");
 let filter = "Todos", visible = projects.slice();
 
-const kinds = ["Todos", ...new Set(projects.map(p => p.kind))];
+// filtros por cliente, com o nome curto e do que tem mais projetos para o que tem menos
+const SHORT = { "Associação Mutualista Montepio": "Montepio", "Lusíadas Saúde": "Lusíadas" };
+const group = p => SHORT[p.client] || p.client;
+const counts = {};
+projects.forEach(p => { if (!/a definir/i.test(p.client)) counts[group(p)] = (counts[group(p)] || 0) + 1; });
+const kinds = ["Todos", ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
 filtersEl.innerHTML = kinds.map(k =>
   `<button class="chip" type="button" data-k="${k}" aria-pressed="${k === filter}">${k}</button>`).join("");
 filtersEl.addEventListener("click", e => {
@@ -416,7 +421,7 @@ function cardHTML(p, i) {
     </button>`;
 }
 function render(keep) {
-  visible = filter === "Todos" ? projects.slice() : projects.filter(p => p.kind === filter);
+  visible = filter === "Todos" ? projects.slice() : projects.filter(p => group(p) === filter);
   const n = keep === true ? Math.max(shown, FIRST) : FIRST;
   shown = 0; grid.innerHTML = "";
   more(n);
