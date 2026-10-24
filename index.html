@@ -75,8 +75,8 @@ header .wrap { padding-block: 20px 4px; display: flex; justify-content: space-be
 .brand:focus-visible { outline-offset: 6px; }
 /* logótipo: os olhos seguem o cursor e olham para quem vê quando se passa por cima */
 .face { position: relative; display: block; height: 84px; aspect-ratio: 1172 / 1416; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
-.face .avatar { display: block; height: 100%; width: 100%; background: var(--fg); -webkit-mask: url(logo-line.png) center / contain no-repeat; mask: url(logo-line.png) center / contain no-repeat; }
-.pupil { position: absolute; border-radius: 50%; background: var(--fg); transform: translate(-50%, -50%) translate(var(--dx, 0px), var(--dy, 0px)) scaleY(var(--blink, 1)); transition: transform .18s ease-out; }
+.face .avatar { height: 100%; width: 100%; }
+.pupil { position: absolute; border-radius: 50%; background: #0b0b0b; transform: translate(-50%, -50%) translate(var(--dx, 0px), var(--dy, 0px)) scaleY(var(--blink, 1)); transition: transform .18s ease-out; }
 .p1 { left: 41.04%; top: 44.56%; width: 3.92%; aspect-ratio: 46 / 40; }
 .p2 { left: 24.74%; top: 43.43%; width: 2.8%; aspect-ratio: 32 / 40; }
 .brand:hover .face, .brand:focus-visible .face { transform: rotate(-4deg) scale(1.06); }
@@ -238,7 +238,7 @@ footer .name { color: var(--fg); font-weight: 600; }
   <div class="wrap">
     <a class="brand" href="#" aria-label="Duarte, home">
       <span class="face" id="face">
-        <span class="avatar" role="img" aria-label="Duarte Carvalho"></span>
+        <img class="avatar" src="logo-face.png" alt="Duarte Carvalho" width="248" height="300">
         <i class="pupil p1"></i><i class="pupil p2"></i>
       </span>
     </a>
