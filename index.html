@@ -467,7 +467,6 @@ function cardHTML(p, i) {
         ${p.thumb ? `<img src="${p.thumb}" alt="" loading="lazy">` : ""}
         ${p.preview ? `<video src="${p.preview}" muted loop playsinline preload="none"></video>` : ""}
         <div class="shade"></div>
-        <span class="kind">${p.kind}</span>
         <span class="play" aria-hidden="true"></span>
         <div class="ov"><span class="client">${p.client}</span><span class="title">${p.title || ""}</span></div>
       </div>
