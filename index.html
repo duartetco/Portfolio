@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-PT">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -233,7 +233,7 @@ footer .name { color: var(--fg); font-weight: 600; }
 <body>
 <header>
   <div class="wrap">
-    <a class="brand" href="#" aria-label="Duarte, início">
+    <a class="brand" href="#" aria-label="Duarte, home">
       <svg class="avatar" aria-hidden="true" viewBox="14 4 72 88" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
 <path d="M75 31 Q82 30 83.5 25 Q79 23.5 79 21 Q84 18 82.5 14 Q76 15 73 12 Q68 12.5 64 11.5 Q60 7 54 7.5 Q56 10 54 11.5 Q47 11 42 14 Q36 14 31 17 Q33 19 32 21 Q25 24 23 30 Q25 31 24.5 33 Q20 37 21 43 Q22.5 47 25 49 C25.5 51.5 27 53.5 28.5 54"/>
 <path d="M37 57 C38 47 44 36 52 31 C58 30 68 30 75 31"/>
@@ -253,15 +253,15 @@ footer .name { color: var(--fg); font-weight: 600; }
 <path d="M41.0 70.0 L44.6 70.0"/><path d="M44.0 75.0 L47.4 73.8"/><path d="M47.5 79.0 L50.2 76.7"/><path d="M52.0 82.0 L53.6 78.8"/><path d="M57.0 84.0 L57.3 80.4"/><path d="M62.0 84.6 L61.0 81.1"/><path d="M67.0 84.0 L65.1 81.0"/><path d="M71.0 81.5 L68.3 79.1"/><path d="M74.0 77.5 L70.7 76.0"/>
 </svg>
     </a>
-    <nav aria-label="Principal">
-      <a href="#trabalhos" aria-current="page">Trabalhos</a>
-      <a href="#contacto">Contacto</a>
+    <nav aria-label="Main">
+      <a href="#trabalhos" aria-current="page">Work</a>
+      <a href="#contacto">Contact</a>
     </nav>
   </div>
 </header>
 
 <section class="filters" id="trabalhos">
-  <div class="wrap" id="filters" role="group" aria-label="Filtrar por cliente"></div>
+  <div class="wrap" id="filters" role="group" aria-label="Filter by client"></div>
 </section>
 
 <main class="wrap">
@@ -273,15 +273,15 @@ footer .name { color: var(--fg); font-weight: 600; }
   <div class="wrap">
     <div class="about">
       <span><b class="name">Duarte Carvalho</b> · Motion designer</span>
-      <p>Sou motion designer com 10 anos de experiência a criar vídeos para marcas de áreas como a saúde, as telecomunicações e as cripto, entre outras. Sou especialista em vídeos para produtos SaaS: pegar em software complexo e explicá-lo de forma clara, com ritmo e boa animação.</p>
-      <p>Tem um projeto em mente? Fale comigo.</p>
+      <p>I'm a motion designer with 10 years of experience creating videos for brands in healthcare, telecom, crypto and more. I specialise in SaaS videos, turning complex software into clear, well-paced animation.</p>
+      <p>Got a project in mind? Let's talk.</p>
     </div>
     <a class="mail" href="mailto:duarte.tco@gmail.com">duarte.tco@gmail.com</a>
   </div>
 </footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
-  <button class="lb-close" type="button" id="lb-close" aria-label="Fechar">Fechar ✕</button>
+  <button class="lb-close" type="button" id="lb-close" aria-label="Close">Close ✕</button>
   <div class="lb-inner">
     <div class="player" id="player">
       <div id="frame"></div>
@@ -295,9 +295,9 @@ footer .name { color: var(--fg); font-weight: 600; }
       <dl class="credits" id="lb-credits"></dl>
     </div>
     <div class="lb-nav">
-      <button type="button" id="prev">← Anterior</button>
+      <button type="button" id="prev">← Previous</button>
       <span class="tc" id="lb-count" style="font: 500 12px var(--mono); color: #8b8d97"></span>
-      <button type="button" id="next">Seguinte →</button>
+      <button type="button" id="next">Next →</button>
     </div>
   </div>
 </div>
@@ -314,11 +314,11 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-experience.mp4", thumb: "media/talkdesk-experience.jpg", preview: "media/talkdesk-experience-preview.mp4",
     g: "linear-gradient(135deg, #2a0e6e, #5b2bd6)" },
-  { title: "Talkdesk Identity", client: "Talkdesk", kind: "Produto", year: "",
+  { title: "Talkdesk Identity", client: "Talkdesk", kind: "Product", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-identity.mp4", thumb: "media/talkdesk-identity.jpg", preview: "media/talkdesk-identity-preview.mp4",
     g: "linear-gradient(135deg, #3b1a8f, #7d4cf0)" },
-  { title: "Chegou a nova app", client: "Pingo Doce", kind: "Publicidade", year: "",
+  { title: "Chegou a nova app", client: "Pingo Doce", kind: "Advertising", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/pingo-doce.mp4", thumb: "media/pingo-doce.jpg", preview: "media/pingo-doce-preview.mp4",
     g: "linear-gradient(135deg, #4c8a14, #8cc63f)" },
@@ -326,15 +326,15 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/lusiadas-pele-roxa.mp4", thumb: "media/lusiadas-pele-roxa.jpg", preview: "media/lusiadas-pele-roxa-preview.mp4",
     g: "linear-gradient(135deg, #cfe3f2, #f2c6c6)" },
-  { title: "Opentalk LA Opening", client: "Talkdesk", kind: "Evento", year: 2022,
+  { title: "Opentalk LA Opening", client: "Talkdesk", kind: "Event", year: 2022,
     role: "Motion design", fmt: "", desc: "",
     file: "media/opentalk-la.mp4", thumb: "media/opentalk-la.jpg", preview: "media/opentalk-la-preview.mp4",
     g: "linear-gradient(135deg, #3a0ca3, #7b2ff7)" },
-  { title: "Frota Solidária 10 anos", client: "Associação Mutualista Montepio", kind: "Institucional", year: "",
+  { title: "Frota Solidária 10 anos", client: "Associação Mutualista Montepio", kind: "Corporate", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/montepio-frota-solidaria.mp4", thumb: "media/montepio-frota-solidaria.jpg", preview: "media/montepio-frota-solidaria-preview.mp4",
     g: "linear-gradient(135deg, #333, #e8611a)" },
-  { title: "Talkdesk VR", client: "Talkdesk", kind: "Produto", year: "",
+  { title: "Talkdesk VR", client: "Talkdesk", kind: "Product", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-vr.mp4", thumb: "media/talkdesk-vr.jpg", preview: "media/talkdesk-vr-preview.mp4",
     g: "linear-gradient(135deg, #0f1a3a, #3d4f8a)" },
@@ -342,19 +342,19 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/lusiadas-tac.mp4", thumb: "media/lusiadas-tac.jpg", preview: "media/lusiadas-tac-preview.mp4",
     g: "linear-gradient(135deg, #c9e04a, #1f3b66)" },
-  { title: "AI Series", client: "Talkdesk", kind: "Série", year: "",
+  { title: "AI Series", client: "Talkdesk", kind: "Series", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-ai-series.mp4", thumb: "media/talkdesk-ai-series.jpg", preview: "media/talkdesk-ai-series-preview.mp4",
     g: "linear-gradient(135deg, #070b2a, #1736c9)" },
-  { title: "Welcome to Opentalk 2020", client: "Talkdesk", kind: "Evento", year: 2020,
+  { title: "Welcome to Opentalk 2020", client: "Talkdesk", kind: "Event", year: 2020,
     role: "Motion design", fmt: "", desc: "",
     file: "media/opentalk-2020.mp4", thumb: "media/opentalk-2020.jpg", preview: "media/opentalk-2020-preview.mp4",
     g: "linear-gradient(135deg, #1b2440, #e2a23a)" },
-  { title: "Poupança Expresso Net", client: "Associação Mutualista Montepio", kind: "Publicidade", year: "",
+  { title: "Poupança Expresso Net", client: "Associação Mutualista Montepio", kind: "Advertising", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/montepio-poupanca-expresso.mp4", thumb: "media/montepio-poupanca-expresso.jpg", preview: "media/montepio-poupanca-expresso-preview.mp4",
     g: "linear-gradient(135deg, #444, #e8611a)" },
-  { title: "Talkdesk Studio", client: "Talkdesk", kind: "Produto", year: "",
+  { title: "Talkdesk Studio", client: "Talkdesk", kind: "Product", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-studio.mp4", thumb: "media/talkdesk-studio.jpg", preview: "media/talkdesk-studio-preview.mp4",
     g: "linear-gradient(135deg, #e9ebf2, #8c90a8)" },
@@ -362,15 +362,15 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/lusiadas-bula.mp4", thumb: "media/lusiadas-bula.jpg", preview: "media/lusiadas-bula-preview.mp4",
     g: "linear-gradient(135deg, #0d6fb8, #e9eef5)" },
-  { title: "Hackathon 2022 Opening", client: "Talkdesk", kind: "Evento", year: 2022,
+  { title: "Hackathon 2022 Opening", client: "Talkdesk", kind: "Event", year: 2022,
     role: "Motion design", fmt: "", desc: "",
     file: "media/hackathon-2022.mp4", thumb: "media/hackathon-2022.jpg", preview: "media/hackathon-2022-preview.mp4",
     g: "linear-gradient(135deg, #3a0ca3, #9b5cff)" },
-  { title: "Every moment is an experience that matters", client: "Talkdesk", kind: "Institucional", year: "",
+  { title: "Every moment is an experience that matters", client: "Talkdesk", kind: "Corporate", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/every-moment.mp4", thumb: "media/every-moment.jpg", preview: "media/every-moment-preview.mp4",
     g: "linear-gradient(135deg, #14203a, #e8611a)" },
-  { title: "Opentalk '21 Welcome", client: "Talkdesk", kind: "Evento", year: 2021,
+  { title: "Opentalk '21 Welcome", client: "Talkdesk", kind: "Event", year: 2021,
     role: "Motion design", fmt: "", desc: "",
     file: "media/opentalk.mp4", thumb: "media/opentalk.jpg", preview: "media/opentalk-preview.mp4",
     g: "linear-gradient(135deg, #3a0ca3, #7b2ff7)" },
@@ -378,7 +378,7 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/lusiadas-fumar.mp4", thumb: "media/lusiadas-fumar.jpg", preview: "media/lusiadas-fumar-preview.mp4",
     g: "linear-gradient(135deg, #dfe9dc, #1f3b66)" },
-  { title: "Talkdesk TV Ad (versão francesa)", client: "Talkdesk", kind: "Publicidade", year: "",
+  { title: "Talkdesk TV Ad (French)", client: "Talkdesk", kind: "Advertising", year: "",
     role: "Motion design", fmt: "", desc: "",
     file: "media/talkdesk-tv-ad-fr.mp4", thumb: "media/talkdesk-tv-ad-fr.jpg", preview: "media/talkdesk-tv-ad-fr-preview.mp4",
     g: "linear-gradient(135deg, #4a12c9, #7d4cf0)" },
@@ -386,7 +386,7 @@ const projects = [
     role: "Motion design", fmt: "", desc: "",
     file: "media/lusiadas-infecoes-urinarias.mp4", thumb: "media/lusiadas-infecoes-urinarias.jpg", preview: "media/lusiadas-infecoes-urinarias-preview.mp4",
     g: "linear-gradient(135deg, #eef2f5, #3c8f4a)" },
-  { title: "", client: "Cliente a definir", kind: "Motion design", year: "",
+  { title: "", client: "Client TBC", kind: "Motion design", year: "",
     role: "Motion design", fmt: "", desc: "",
     youtube: "ux3-NAYnI5Y",
     g: "linear-gradient(140deg, #23324a 0%, #4b5d86 45%, #c8b8e6 100%)" },
@@ -394,14 +394,14 @@ const projects = [
 
 const $ = s => document.querySelector(s);
 const grid = $("#grid"), filtersEl = $("#filters");
-let filter = "Todos", visible = projects.slice();
+let filter = "All", visible = projects.slice();
 
 // filtros por cliente, com o nome curto e do que tem mais projetos para o que tem menos
 const SHORT = { "Associação Mutualista Montepio": "Montepio", "Lusíadas Saúde": "Lusíadas" };
 const group = p => SHORT[p.client] || p.client;
 const counts = {};
-projects.forEach(p => { if (!/a definir/i.test(p.client)) counts[group(p)] = (counts[group(p)] || 0) + 1; });
-const kinds = ["Todos", ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
+projects.forEach(p => { if (!/TBC/.test(p.client)) counts[group(p)] = (counts[group(p)] || 0) + 1; });
+const kinds = ["All", ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
 filtersEl.innerHTML = kinds.map(k =>
   `<button class="chip" type="button" data-k="${k}" aria-pressed="${k === filter}">${k}</button>`).join("");
 filtersEl.addEventListener("click", e => {
@@ -417,7 +417,7 @@ let shown = 0;
 const moreEl = $("#more");
 function cardHTML(p, i) {
   return `
-    <button class="card" type="button" data-i="${i}" style="--g:${p.g}" aria-label="Ver ${p.title || "vídeo"}, ${p.client}">
+    <button class="card" type="button" data-i="${i}" style="--g:${p.g}" aria-label="Watch ${p.title || "video"}, ${p.client}">
       <div class="thumb">
         <div class="scene"></div>
         ${p.thumb ? `<img src="${p.thumb}" alt="" loading="lazy">` : ""}
@@ -430,7 +430,7 @@ function cardHTML(p, i) {
     </button>`;
 }
 function render(keep) {
-  visible = filter === "Todos" ? projects.slice() : projects.filter(p => group(p) === filter);
+  visible = filter === "All" ? projects.slice() : projects.filter(p => group(p) === filter);
   // destaque grande só quando há projetos suficientes para encher a linha
   grid.classList.toggle("feature", visible.length >= 3);
   grid.classList.toggle("few", visible.length < 3);
@@ -539,7 +539,7 @@ function embed(p) {
   if (p.youtube) {
     return `<iframe src="https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${p.title}"></iframe>`;
   }
-  return `<div class="scene" style="--g:${p.g}"></div><div class="hint">Vídeo ainda por adicionar</div>`;
+  return `<div class="scene" style="--g:${p.g}"></div><div class="hint">Video coming soon</div>`;
 }
 
 function open(i) {
@@ -550,7 +550,7 @@ function open(i) {
   $("#lb-client").textContent = p.client;
   $("#lb-title").textContent = p.title;
   $("#lb-desc").textContent = p.desc;
-  $("#lb-credits").innerHTML = [["Cliente", p.client], ["Função", p.role], ["Formato", p.fmt], ["Ano", p.year]]
+  $("#lb-credits").innerHTML = [["Client", p.client], ["Role", p.role], ["Format", p.fmt], ["Year", p.year]]
     .filter(([, v]) => v).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
   $("#lb-count").textContent = `${pad(cur + 1)} / ${pad(visible.length)}`;
   lb.hidden = false; document.body.style.overflow = "hidden";
