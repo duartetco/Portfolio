@@ -177,7 +177,7 @@ footer .name { color: var(--fg); font-weight: 600; }
 @keyframes fade { from { opacity: 0; } }
 .lb-inner { width: min(1100px, 100%); display: grid; gap: 18px; max-height: 100%; overflow: auto; }
 .player { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: #000; border-radius: 3px; overflow: hidden; }
-.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.player iframe, .player video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .thumb video, .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .thumb video { opacity: 0; transition: opacity .3s; }
 .thumb iframe.bg { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; opacity: 0; transition: opacity .4s; }
@@ -295,6 +295,7 @@ footer .name { color: var(--fg); font-weight: 600; }
    youtube: "ID" (o código depois de watch?v=)
    thumb:   imagem de capa (ex.: "media/mare-alta.jpg")
    preview: clip curto MP4 sem som para o hover (ex.: "media/mare-alta.mp4")
+   file:    vídeo completo alojado no próprio site (ex.: "media/mare-alta-full.mp4")
    g:       gradiente usado enquanto não há imagem de capa */
 const projects = [
   { title: "Talkdesk Identity", client: "Talkdesk", kind: "Branding", year: "",
@@ -431,6 +432,9 @@ let cur = 0, lastFocus = null;
 const pad = n => String(n).padStart(2, "0");
 
 function embed(p) {
+  if (p.file) {
+    return `<video src="${p.file}" ${p.thumb ? `poster="${p.thumb}"` : ""} controls autoplay playsinline></video>`;
+  }
   if (p.vimeo) {
     const [id, q] = p.vimeo.split("?");
     const src = `https://player.vimeo.com/video/${id}?${q ? q + "&" : ""}autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&dnt=1`;
