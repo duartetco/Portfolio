@@ -397,8 +397,8 @@ filtersEl.addEventListener("click", e => {
   render();
 });
 
-// mostra 9 projetos e vai juntando mais 6 à medida que se faz scroll
-const FIRST = 9, STEP = 6;
+// mostra 6 projetos e junta mais 6 de cada vez que se faz scroll até ao fim
+const FIRST = 6, STEP = 6;
 let shown = 0;
 const moreEl = $("#more");
 function cardHTML(p, i) {
@@ -428,10 +428,13 @@ function more(n) {
   grid.insertAdjacentHTML("beforeend", visible.slice(from, shown).map((p, k) => cardHTML(p, from + k)).join(""));
   hookPreviews([...grid.children].slice(from));
   moreEl.hidden = shown >= visible.length;
-  // se o fim da grelha ainda estiver à vista, junta mais
-  requestAnimationFrame(() => { if (!moreEl.hidden && moreEl.getBoundingClientRect().top < innerHeight + 200) more(STEP); });
 }
-new IntersectionObserver(es => { if (es[0].isIntersecting) more(STEP); }, { rootMargin: "0px 0px 200px 0px" }).observe(moreEl);
+let lastMore = 0;
+function onScrollMore() {
+  if (moreEl.hidden || Date.now() - lastMore < 500) return;
+  if (moreEl.getBoundingClientRect().top < innerHeight + 150) { lastMore = Date.now(); more(STEP); }
+}
+["scroll", "wheel", "touchmove"].forEach(ev => addEventListener(ev, onScrollMore, { passive: true }));
 
 // pré-visualização: hover no computador, ao aparecer no ecrã no telemóvel
 const canHover = matchMedia("(hover: hover)").matches;
