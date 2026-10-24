@@ -156,6 +156,8 @@ nav a:hover, nav a[aria-current] { color: var(--fg); }
 .grid.feature .card:first-child { grid-column: span 2; }
 .grid.feature .card:first-child .title { font-size: 30px; }
 @media (max-width: 600px) { .grid.feature .card:first-child { grid-column: auto; } }
+/* com 1 ou 2 projetos, ficam em duas colunas largas */
+@media (min-width: 601px) { .grid.few { --cols: 2 !important; } }
 @media (min-width: 981px) {
   .grid.feature:not([style*="--cols: 2"]) .card:first-child { grid-row: span 2; }
   .grid.feature:not([style*="--cols: 2"]) .card:first-child .thumb { aspect-ratio: auto; flex: 1; min-height: 100%; }
@@ -422,6 +424,9 @@ function cardHTML(p, i) {
 }
 function render(keep) {
   visible = filter === "Todos" ? projects.slice() : projects.filter(p => group(p) === filter);
+  // destaque grande só quando há projetos suficientes para encher a linha
+  grid.classList.toggle("feature", visible.length >= 3);
+  grid.classList.toggle("few", visible.length < 3);
   const n = keep === true ? Math.max(shown, FIRST) : FIRST;
   shown = 0; grid.innerHTML = "";
   more(n);
