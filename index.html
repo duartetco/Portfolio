@@ -73,20 +73,14 @@ header .wrap { padding-block: 20px 4px; display: flex; justify-content: space-be
 .brand { display: inline-flex; }
 .avatar { display: block; }
 .brand:focus-visible { outline-offset: 6px; }
-/* logótipo: os olhos seguem o cursor e olham para quem vê quando se passa por cima */
 .face { position: relative; display: block; height: 84px; aspect-ratio: 598 / 750; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
 .face .avatar { height: 100%; width: 100%; background: var(--fg); -webkit-mask: url(logo-line.png) center / contain no-repeat; mask: url(logo-line.png) center / contain no-repeat; }
-.pupil { position: absolute; border-radius: 50%; background: var(--bg); transform: translate(-50%, -50%) translate(var(--dx, 0px), var(--dy, 0px)) scaleY(var(--blink, 1)); transition: transform .18s ease-out; }
-.p1 { left: 44.9%; top: 44.27%; width: 3.85%; aspect-ratio: 1; }
-.p2 { left: 27.09%; top: 43.53%; width: 2.09%; aspect-ratio: 1; }
 /* em tema claro, a ilustração aparece como no original: cara branca, traço escuro */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .face .avatar { background: url(logo-light.png) center / contain no-repeat; -webkit-mask: none; mask: none; }
-  :root:not([data-theme="dark"]) .pupil { background: #111; }
-}
+  :root:not([data-theme="dark"]) }
 :root[data-theme="light"] .face .avatar { background: url(logo-light.png) center / contain no-repeat; -webkit-mask: none; mask: none; }
-:root[data-theme="light"] .pupil { background: #111; }
-.brand:hover .face, .brand:focus-visible .face { transform: rotate(-4deg) scale(1.06); }
+:root[data-theme="light"] .brand:hover .face, .brand:focus-visible .face { transform: rotate(-4deg) scale(1.06); }
 .brand i { font-style: normal; color: var(--tally); }
 nav { display: flex; gap: 22px; font-size: 14px; }
 nav a { color: var(--muted); text-decoration: none; }
@@ -246,7 +240,6 @@ footer .name { color: var(--fg); font-weight: 600; }
     <a class="brand" href="#" aria-label="Duarte, home">
       <span class="face" id="face">
         <span class="avatar" role="img" aria-label="Duarte Carvalho"></span>
-        <i class="pupil p1"></i><i class="pupil p2"></i>
       </span>
     </a>
     <nav aria-label="Main">
@@ -659,37 +652,6 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowLeft") open(cur - 1);
 });
 
-// olhos do logótipo
-(() => {
-  const face = $("#face"), brand = face.closest(".brand");
-  const pupils = [...face.querySelectorAll(".pupil")];
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let hover = false;
-  function look(nx, ny) {
-    pupils.forEach((p, i) => {
-      const d = p.getBoundingClientRect().width, r = d * (i ? 0.5 : 0.45);
-      p.style.setProperty("--dx", (nx * r).toFixed(2) + "px");
-      p.style.setProperty("--dy", (Math.min(Math.max(ny, -1), 0.3) * r * 0.6).toFixed(2) + "px");
-    });
-  }
-  if (still) return;
-  addEventListener("mousemove", e => {
-    if (hover) return;
-    const b = face.getBoundingClientRect(), cx = b.left + b.width * 0.35, cy = b.top + b.height * 0.44;
-    const vx = e.clientX - cx, vy = e.clientY - cy, len = Math.hypot(vx, vy) || 1, k = Math.min(1, len / 300);
-    look(vx / len * k, vy / len * k);
-  }, { passive: true });
-  // ao passar por cima, olha para a câmara
-  brand.addEventListener("mouseenter", () => { hover = true; look(0.75, 0.25); });
-  brand.addEventListener("mouseleave", () => { hover = false; });
-  // pestanejar de vez em quando
-  (function blink() {
-    setTimeout(() => {
-      pupils.forEach(p => p.style.setProperty("--blink", 0.1));
-      setTimeout(() => { pupils.forEach(p => p.style.setProperty("--blink", 1)); blink(); }, 140);
-    }, 2500 + Math.random() * 3500);
-  })();
-})();
 </script>
 </body>
 </html>
