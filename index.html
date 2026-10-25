@@ -168,16 +168,18 @@ nav a:hover, nav a[aria-current] { color: var(--fg); }
 @media (min-width: 601px) { .grid.few { --cols: 2 !important; } }
 
 footer { border-top: 1px solid var(--line); }
-footer .wrap { padding-block: 40px 48px; display: flex; gap: 20px 40px; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; color: var(--muted); font-size: 13px; }
+footer .wrap { padding-block: 40px 48px; display: flex; gap: 20px 40px; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; color: var(--muted); font-size: 13px; }
 footer .about { display: grid; gap: 10px; max-width: 58ch; min-width: 0; }
 footer .about p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--fg); }
 footer .about p + p { color: var(--muted); }
 footer .mail { font: 500 13px var(--mono); color: var(--fg); text-decoration: none; user-select: all; }
 footer .mail:hover { color: var(--accent); }
-footer .hello { display: grid; justify-items: end; gap: 6px; }
-footer .hi { width: 96px; height: 96px; color: var(--fg); transform-origin: 50% 80%; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
-footer .hello:hover .hi { transform: rotate(-8deg) scale(1.06); }
-@media (max-width: 700px) { footer .hello { justify-items: start; } }
+footer .hi { width: 96px; height: 96px; flex: none; color: var(--fg); transform-origin: 50% 80%; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+footer .hi:hover { transform: rotate(-8deg) scale(1.06); }
+footer .about { flex: 0 1 58ch; }
+footer .mail { margin-left: auto; }
+footer .hi { margin: -14px -8px 0 -20px; }
+@media (max-width: 700px) { footer .mail { margin-left: 0; } }
 footer .name { color: var(--fg); font-weight: 600; }
 
 /* lightbox */
@@ -265,19 +267,17 @@ footer .name { color: var(--fg); font-weight: 600; }
 
 <footer id="contacto">
   <div class="wrap">
+    <svg class="hi" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M23 28 C21 40 21 52 23 63"/><path d="M47 26 C46 38 46 50 47 61"/><path d="M23 47 C31 44 39 44 47 45"/>
+      <path d="M67 23 C64 33 62 41 60 49"/><circle cx="57.5" cy="61" r="4.8" fill="currentColor" stroke="none"/>
+      <path d="M25 73 C38 87 60 86 76 66"/>
+    </svg>
     <div class="about">
       <span><b class="name">Duarte Carvalho</b> · Motion designer</span>
       <p>I'm a motion designer with 10 years of experience creating videos for brands in healthcare, telecom, crypto and more. I specialise in SaaS videos, turning complex software into clear, well-paced animation.</p>
       <p>Got a project in mind? Let's talk.</p>
     </div>
-    <div class="hello">
-      <svg class="hi" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M23 28 C21 40 21 52 23 63"/><path d="M47 26 C46 38 46 50 47 61"/><path d="M23 47 C31 44 39 44 47 45"/>
-        <path d="M67 23 C64 33 62 41 60 49"/><circle cx="57.5" cy="61" r="4.8" fill="currentColor" stroke="none"/>
-        <path d="M25 73 C38 87 60 86 76 66"/>
-      </svg>
-      <a class="mail" href="mailto:duarte.tco@gmail.com">duarte.tco@gmail.com</a>
-    </div>
+    <a class="mail" href="mailto:duarte.tco@gmail.com">duarte.tco@gmail.com</a>
   </div>
 </footer>
 
