@@ -516,12 +516,19 @@ function more(n) {
   layout();
   moreEl.hidden = shown >= visible.length;
 }
-let lastMore = 0;
+let lastMore = 0, hold = false, lastY = scrollY;
 function onScrollMore() {
-  if (moreEl.hidden || Date.now() - lastMore < 500) return;
+  // depois de ir ao contacto, só volta a carregar quando a pessoa sobe outra vez
+  if (hold && scrollY < lastY - 40) hold = false;
+  if (!hold) lastY = scrollY; else lastY = Math.max(lastY, scrollY);
+  if (hold || moreEl.hidden || Date.now() - lastMore < 500) return;
   if (moreEl.getBoundingClientRect().top < innerHeight + 150) { lastMore = Date.now(); more(STEP); }
 }
 ["scroll", "wheel", "touchmove"].forEach(ev => addEventListener(ev, onScrollMore, { passive: true }));
+$('a[href="#contacto"]').addEventListener("click", e => {
+  e.preventDefault(); hold = true; lastY = 0;
+  $("#contacto").scrollIntoView({ behavior: "smooth" });
+});
 
 // cada cartão ocupa tantas linhas de 4px quanto a sua altura real mais o espaço entre cartões
 const ROW = 4, GAP = 24;
