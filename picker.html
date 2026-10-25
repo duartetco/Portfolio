@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Escolher thumbnails</title>
+<style>
+:root { --bg:#0e0f12; --card:#17191e; --fg:#f2f0ea; --mute:#8b8f98; --acc:#c6f24e; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.4 "Helvetica Neue",Arial,sans-serif; padding:16px 16px 96px; }
+h1 { font-size:20px; margin:4px 0 4px; }
+p.lead { color:var(--mute); margin:0 0 20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr)); gap:16px; }
+.item { background:var(--card); border-radius:12px; padding:12px; }
+.item.done { outline:2px solid var(--acc); }
+.item h2 { font-size:15px; margin:0 0 2px; }
+.item .c { color:var(--mute); font-size:13px; margin-bottom:8px; }
+video { width:100%; max-height:420px; background:#000; border-radius:8px; display:block; }
+.row { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+button { font:inherit; border:0; border-radius:999px; padding:8px 12px; background:#2a2d35; color:var(--fg); cursor:pointer; }
+button.use { background:var(--acc); color:#111; font-weight:600; }
+.t { color:var(--mute); font-size:13px; margin-left:auto; font-variant-numeric:tabular-nums; }
+.item.done .t { color:var(--acc); }
+.bar { position:fixed; left:0; right:0; bottom:0; padding:12px 16px; background:rgba(14,15,18,.95); border-top:1px solid #2a2d35; display:flex; gap:10px; align-items:center; }
+.bar span { color:var(--mute); flex:1; }
+</style>
+</head>
+<body>
+<h1>Escolher thumbnails</h1>
+<p class="lead">Avança o vídeo até ao frame que queres e carrega em <b>Usar este frame</b>. No fim, carrega em <b>Copiar escolhas</b> e cola a lista na conversa. As escolhas ficam guardadas neste browser.</p>
+<div class="grid" id="grid"></div>
+<div class="bar"><span id="count"></span><button class="use" id="copy">Copiar escolhas</button></div>
+<script>
+const ITEMS = [{"t": "Experience. A better way.", "c": "Talkdesk", "s": "talkdesk-experience"}, {"t": "Phoenix", "c": "Sword Health", "s": "phoenix-intro"}, {"t": "Talkdesk Identity", "c": "Talkdesk", "s": "talkdesk-identity"}, {"t": "Token2049 Founder Interviews", "c": "Client TBC", "s": "token2049-interviews"}, {"t": "Chegou a nova app", "c": "Pingo Doce", "s": "pingo-doce"}, {"t": "USAT", "c": "Anchorage Digital", "s": "tether-social"}, {"t": "Porque é que a pele fica roxa quando temos frio?", "c": "Lusíadas Saúde", "s": "lusiadas-pele-roxa"}, {"t": "Porto", "c": "Anchorage Digital", "s": "v7"}, {"t": "Opentalk LA Opening", "c": "Talkdesk", "s": "opentalk-la"}, {"t": "Web3 dApp Directory", "c": "Anchorage Digital", "s": "web3-dapp"}, {"t": "Frota Solidária 10 anos", "c": "Associação Mutualista Montepio", "s": "montepio-frota-solidaria"}, {"t": "Academy", "c": "Sword Health", "s": "academy-update"}, {"t": "Talkdesk VR", "c": "Talkdesk", "s": "talkdesk-vr"}, {"t": "All Solutions", "c": "Sword Health", "s": "gg-all-solutions"}, {"t": "Como se faz uma TAC", "c": "Lusíadas Saúde", "s": "lusiadas-tac"}, {"t": "AI Series", "c": "Talkdesk", "s": "talkdesk-ai-series"}, {"t": "IPOR Fusion on Porto", "c": "Anchorage Digital", "s": "ipor-fusion"}, {"t": "Welcome to Opentalk 2020", "c": "Talkdesk", "s": "opentalk-2020"}, {"t": "Bloom", "c": "Sword Health", "s": "bloom-solution"}, {"t": "Sibos TV", "c": "Anchorage Digital", "s": "sibos-tv"}, {"t": "Poupança Expresso Net", "c": "Associação Mutualista Montepio", "s": "montepio-poupanca-expresso"}, {"t": "Talkdesk Studio", "c": "Talkdesk", "s": "talkdesk-studio"}, {"t": "Como descodificar a bula de medicamentos", "c": "Lusíadas Saúde", "s": "lusiadas-bula"}, {"t": "Fiat API", "c": "Anchorage Digital", "s": "fiat-api"}, {"t": "Sword Overview (PT)", "c": "Sword Health", "s": "sword-overview"}, {"t": "Thrive Announcement", "c": "Sword Health", "s": "thrive-announcement"}, {"t": "Hackathon 2022 Opening", "c": "Talkdesk", "s": "hackathon-2022"}, {"t": "Every moment is an experience that matters", "c": "Talkdesk", "s": "every-moment"}, {"t": "Opentalk '21 Welcome", "c": "Talkdesk", "s": "opentalk"}, {"t": "Social Sizzle Reel", "c": "Sword Health", "s": "social-sizzle-reel"}, {"t": "O que acontece ao seu corpo quando deixa de fumar?", "c": "Lusíadas Saúde", "s": "lusiadas-fumar"}, {"t": "2024 Year in Review", "c": "Sword Health", "s": "end-year-2024"}, {"t": "Talkdesk TV Ad (French)", "c": "Talkdesk", "s": "talkdesk-tv-ad-fr"}, {"t": "Porque temos infeções urinárias?", "c": "Lusíadas Saúde", "s": "lusiadas-infecoes-urinarias"}];
+const KEY = "thumb-picks";
+let picks = {};
+try { picks = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(picks)); } catch (e) {} };
+const fmt = s => { const m = Math.floor(s / 60), r = (s % 60).toFixed(2).padStart(5, "0"); return m + ":" + r; };
+const grid = document.getElementById("grid"), count = document.getElementById("count");
+const update = () => { count.textContent = Object.keys(picks).length + " de " + ITEMS.length + " escolhidos"; };
+ITEMS.forEach(p => {
+  const el = document.createElement("div");
+  el.className = "item" + (p.s in picks ? " done" : "");
+  el.innerHTML = `<h2></h2><div class="c"></div>
+    <video controls playsinline muted preload="metadata" poster="media/${p.s}.jpg"><source src="media/${p.s}.mp4#t=0.1" type="video/mp4"></video>
+    <div class="row"><button data-d="-1">-1s</button><button data-d="-0.04">-1 frame</button><button data-d="0.04">+1 frame</button><button data-d="1">+1s</button></div>
+    <div class="row"><button class="use">Usar este frame</button><span class="t"></span></div>`;
+  el.querySelector("h2").textContent = p.t;
+  el.querySelector(".c").textContent = p.c;
+  const v = el.querySelector("video"), t = el.querySelector(".t");
+  const show = () => { t.textContent = p.s in picks ? "Escolhido: " + fmt(picks[p.s]) : "Atual: " + fmt(v.currentTime || 0); };
+  v.addEventListener("timeupdate", show); v.addEventListener("seeked", show);
+  el.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { v.pause(); v.currentTime = Math.max(0, v.currentTime + +b.dataset.d); });
+  el.querySelector(".use").onclick = () => { v.pause(); picks[p.s] = +v.currentTime.toFixed(2); save(); el.classList.add("done"); show(); update(); };
+  show(); grid.appendChild(el);
+});
+update();
+document.getElementById("copy").onclick = async () => {
+  const txt = "Thumbnails:\n" + ITEMS.filter(p => p.s in picks).map(p => p.s + " " + picks[p.s]).join("\n");
+  try { await navigator.clipboard.writeText(txt); alert("Copiado! Cola na conversa."); }
+  catch (e) { prompt("Copia este texto:", txt); }
+};
+</script>
+</body>
+</html>
